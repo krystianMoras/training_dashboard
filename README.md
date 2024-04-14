@@ -4,6 +4,7 @@ Very very basic dashboard to summarize my exercise logs, treat it as an inspirat
 
 1. import "Log exercises.flo" flow in Automate Android app.
 2. after you do your exercise, sync logs
+3. change config.ini.example with correct logs directory and rename to config.ini
 3. run python dashboard.py
 ![demo](image.png)
 

@@ -5,7 +5,12 @@ import plotly.express as px
 import dash
 from dash import html, dcc, Input, Output
 
-log_dir = Path("logs")
+import configparser
+
+config = configparser.ConfigParser()
+config.read("config.ini")
+
+log_dir = Path(config["DEFAULT"]["LogDirectory"])
 
 
 def read_logs(log_dir):
@@ -13,12 +18,14 @@ def read_logs(log_dir):
 
     data = []
     for log_file in log_files:
+        print(log_file)
         training_id = (
             log_file.stem
         )  # use the file name without extension as the training identifier
         with open(log_file) as f:
             for line in f:
-                start, end, exercise, count = line.split()
+                start, end, *exercise, count = line.split()
+                exercise = " ".join(exercise)
                 data.append(
                     {
                         "training_id": training_id,
@@ -180,6 +187,7 @@ def update_graph(start_date, end_date):
         hover_name="exercise",
         hover_data={
             "count": True,
+            "duration": True,
             "start": False,
             "end": False,
             "training_id": False,
